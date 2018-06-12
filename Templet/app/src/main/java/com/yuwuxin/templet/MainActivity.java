@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,37 +25,43 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-//        ImagesAdapter imagesAdapter = new ImagesAdapter();
+        ImagesAdapter imagesAdapter = new ImagesAdapter();
 
         rv_names.setLayoutManager(linearLayoutManager);
-//        rv_names.setAdapter(imagesAdapter);
+        rv_names.setAdapter(imagesAdapter);
 
     }
 
     private class ImagesAdapter extends RecyclerView.Adapter {
 
-        private TextView image_text_name;
-
-        ImagesAdapter(View v) {
-//            image_text_name = v.findViewById(R.id.image_text_name);
-        }
-
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false);
-//            return new ImagesAdapter(v);
-            return null;
+            return new ImageHolder(v);
         }
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+            ImageHolder imageHolder=(ImageHolder)holder;
+            imageHolder.textView.setText(String.valueOf(position));
         }
 
         @Override
         public int getItemCount() {
-            return 0;
+            return 10;
+        }
+    }
+
+    class ImageHolder extends RecyclerView.ViewHolder{
+
+        ImageView imageView;
+        TextView textView;
+
+        ImageHolder(View itemView) {
+            super(itemView);
+            imageView = itemView.findViewById(R.id.imageView);
+            textView = itemView.findViewById(R.id.textView);
         }
     }
 }
